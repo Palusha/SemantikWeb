@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 class Cinema(models.Model):
@@ -41,3 +42,12 @@ class Employee(models.Model):
 
     def __str__(self):
         return f'{self.firstname} {self.lastname}'
+
+
+class CustomUser(AbstractUser):
+    USER_ROLES = (
+        ('admin', 'Admin'),
+        ('moderator', 'Moderator'),
+        ('user', 'User'),
+    )
+    role = models.CharField(max_length=20, choices=USER_ROLES, default='user', verbose_name='Role')
