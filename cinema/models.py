@@ -17,6 +17,7 @@ class Movie(models.Model):
     genre = models.CharField(max_length=255)
     cinema = models.ForeignKey('cinema.Cinema', on_delete=models.CASCADE)
     actors = models.ManyToManyField('cinema.Actor')
+    location = models.ForeignKey('cinema.Location', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -42,6 +43,29 @@ class Employee(models.Model):
 
     def __str__(self):
         return f'{self.firstname} {self.lastname}'
+
+
+class Food(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    cinema = models.ManyToManyField('cinema.Cinema')
+    price = models.FloatField()
+
+    def __str__(self):
+        return self.name
+
+
+class Location(models.Model):
+    name = models.CharField(max_length=255)
+    population = models.IntegerField()
+    area = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def location_area(self):
+        return f'{self.area} km2'
 
 
 class CustomUser(AbstractUser):
